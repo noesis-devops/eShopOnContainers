@@ -42,4 +42,4 @@ jobs:
       with:
         context: ${{ matrix.service.path }}
         push: true
-        tags: ghcr.io/${{ github.repository }}/${{ matrix.service.tag }}
+        tags: ghcr.io}/${{ matrix.service.tag }}
