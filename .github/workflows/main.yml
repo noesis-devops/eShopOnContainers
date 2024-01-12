@@ -1,0 +1,45 @@
+name: Docker Build and Push
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [
+          { name: "eshopbasket", tag: "eshop/basket.api", path: "src/Services/Basket/Basket.API" },
+          { name: "eshopcatalog", tag: "eshop/catalog.api", path: "src/Services/Catalog/Catalog.API" },
+          { name: "eshopidentity", tag: "eshop/identity.api", path: "src/Services/Identity/Identity.API" },
+          { name: "eshopordering", tag: "eshop/ordering.api", path: "src/Services/Ordering/Ordering.API" },
+          { name: "eshoporderingbg", tag: "eshop/ordering.backgroundtasks", path: "src/Services/Ordering/Ordering.BackgroundTasks" },
+          { name: "eshopwebspa", tag: "eshop/webspa", path: "src/Web/WebSPA" },
+          { name: "eshopwebmvc", tag: "eshop/webmvc", path: "src/Web/WebMVC" },
+          { name: "eshopwebstatus", tag: "eshop/webstatus", path: "src/Web/WebStatus" },
+          { name: "eshoppayment", tag: "eshop/payment.api", path: "src/Services/Payment/Payment.API" },
+          { name: "eshopocelotapigw", tag: "eshop/ocelotapigw", path: "src/ApiGateways/ApiGw-Base" },
+          { name: "eshopmobileshoppingagg", tag: "eshop/mobileshoppingagg", path: "src/ApiGateways/Mobile.Bff.Shopping/aggregator" },
+          { name: "eshopwebshoppingagg", tag: "eshop/webshoppingagg", path: "src/ApiGateways/Web.Bff.Shopping/aggregator" },
+          { name: "eshoporderingsignalrhub", tag: "eshop/ordering.signalrhub", path: "src/Services/Ordering/Ordering.SignalrHub" }
+        ]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push ${{ matrix.service.name }}
+      uses: docker/build-push-action@v2
+      with:
+        context: ${{ matrix.service.path }}
+        push: true
+        tags: ghcr.io/${{ github.repository }}/${{ matrix.service.tag }}
