@@ -17,7 +17,6 @@ jobs:
           { name: "eshopwebmvc", tag: "eshop/webmvc", path: "src/Web/WebMVC" },
           { name: "eshopwebstatus", tag: "eshop/webstatus", path: "src/Web/WebStatus" },
           { name: "eshoppayment", tag: "eshop/payment.api", path: "src/Services/Payment/Payment.API" },
-          { name: "eshopocelotapigw", tag: "eshop/ocelotapigw", path: "src/ApiGateways/ApiGw-Base" },
           { name: "eshopmobileshoppingagg", tag: "eshop/mobileshoppingagg", path: "src/ApiGateways/Mobile.Bff.Shopping/aggregator" },
           { name: "eshopwebshoppingagg", tag: "eshop/webshoppingagg", path: "src/ApiGateways/Web.Bff.Shopping/aggregator" },
           { name: "eshoporderingsignalrhub", tag: "eshop/ordering.signalrhub", path: "src/Services/Ordering/Ordering.SignalrHub" }
