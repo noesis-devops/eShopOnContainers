@@ -1,7 +1,8 @@
 name: Docker Build and Push
 
 on: [push]
-
+permissions:
+  packages: write
 jobs:
   build:
     runs-on: ubuntu-latest
